@@ -1,1 +1,1 @@
-export {default as AuthFormCard} from "./authFormCard/AuthFormCard.vue";
+export { default as AuthFormCard } from './authFormCard/AuthFormCard.vue'

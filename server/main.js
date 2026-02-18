@@ -4,14 +4,17 @@ const cors = require("cors");
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { connect } = require('./src/db/mongo');
+const initCollections = require("./src/db/initCollections");
 const errorMiddleware = require('./src/middlewares/error');
 const cookieParser = require("cookie-parser");
 const authRoutes = require('./src/modules/auth');
 const userRoutes = require('./src/modules/user');
 const accountRoutes = require("./src/modules/account");
+const tasksRoutes = require('./src/modules/tasks');
 
 async function start() {
     await connect();
+    await initCollections();
 
     const app = express();
 
@@ -31,6 +34,7 @@ async function start() {
     app.use('/auth', authRoutes);
     app.use('/users', userRoutes);
     app.use('/account', accountRoutes);
+    app.use('/tasks', tasksRoutes);
 
     app.use(errorMiddleware);
 

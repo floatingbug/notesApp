@@ -1,5 +1,3 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useAuthModuleStore = defineStore("auth", {
-});
-
+export const useAuthModuleStore = defineStore('auth', {})

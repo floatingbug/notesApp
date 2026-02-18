@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch} from "vue";
+import { ref, watch } from 'vue'
 
 const props = defineProps({
 	user: {
@@ -15,138 +15,110 @@ const props = defineProps({
 	isLoading: {
 		type: Boolean,
 	},
-});
+})
 
-const emit = defineEmits(["profileForm:action"]);
+const emit = defineEmits(['profileForm:action'])
 
-const localUser = ref({...props.user});
-const password = ref("");
+const localUser = ref({ ...props.user })
+const password = ref('')
 
 function onSubmit() {
-	const newChanges = {};
+	const newChanges = {}
 
 	// Collect changes
 	for (const key in localUser.value) {
 		if (localUser.value[key] !== props.user[key]) {
-			newChanges[key] = localUser.value[key];
+			newChanges[key] = localUser.value[key]
 		}
 	}
 
-	if(password.value !== "") newChanges.password = password.value;
+	if (password.value !== '') newChanges.password = password.value
 
-	emit("profileForm:action", {
-		action: "profileChanged",
+	emit('profileForm:action', {
+		action: 'profileChanged',
 		changes: newChanges,
-	});
+	})
 }
 
-watch(() => localUser.value.name, () => {
-	emit("profileForm:action", {
-		action: "keyPress",
-		pressKontext: "name",
-	});
-});
+watch(
+	() => localUser.value.name,
+	() => {
+		emit('profileForm:action', {
+			action: 'keyPress',
+			pressKontext: 'name',
+		})
+	},
+)
 
-watch(() => localUser.value.email, () => {
-	emit("profileForm:action", {
-		action: "keyPress",
-		pressKontext: "email",
-	});
-});
+watch(
+	() => localUser.value.email,
+	() => {
+		emit('profileForm:action', {
+			action: 'keyPress',
+			pressKontext: 'email',
+		})
+	},
+)
 
-watch(() => password.value, () => {
-	emit("profileForm:action", {
-		action: "keyPress",
-		pressKontext: "password",
-	});
-});
-
+watch(
+	() => password.value,
+	() => {
+		emit('profileForm:action', {
+			action: 'keyPress',
+			pressKontext: 'password',
+		})
+	},
+)
 </script>
-
 
 <template>
 	<form @submit.prevent="onSubmit">
 		<div class="form__field">
-			<label class="form__label"
-				for="name"
-			>
-				Name
-			</label>
+			<label class="form__label" for="name"> Name </label>
 
-			<InputText class="form__input"
-				v-model="localUser.name"
-			/>
+			<InputText class="form__input" v-model="localUser.name" />
 
-			<Message v-if="messages.name"
-				severity="success"
-			>
-				{{messages.name}}
+			<Message v-if="messages.name" severity="success">
+				{{ messages.name }}
 			</Message>
 
-			<Message v-if="errorMessages.name"
-				severity="error"
-			>
-				{{errorMessages.name}}
+			<Message v-if="errorMessages.name" severity="error">
+				{{ errorMessages.name }}
 			</Message>
 		</div>
 
 		<div class="form__field">
-			<label class="form__label"
-				for="name"
-			>
-				E-Mail
-			</label>
+			<label class="form__label" for="name"> E-Mail </label>
 
-			<InputText class="form__input"
-				v-model="localUser.email"
-			/>
+			<InputText class="form__input" v-model="localUser.email" />
 
-			<Message v-if="messages.email"
-				severity="info"
-			>
-				{{messages.email}}
+			<Message v-if="messages.email" severity="info">
+				{{ messages.email }}
 			</Message>
 
-			<Message v-if="errorMessages.email"
-				severity="error"
-			>
-				{{errorMessages.email}}
+			<Message v-if="errorMessages.email" severity="error">
+				{{ errorMessages.email }}
 			</Message>
 		</div>
 
 		<div class="form__field">
-			<label class="form__label"
-				for="name"
-			>
-				New Password
-			</label>
-			<Password class="form__input"
-				v-model="password"
-			/>
+			<label class="form__label" for="name"> New Password </label>
+			<Password class="form__input" v-model="password" />
 
-			<Message v-if="messages.password"
-				severity="success"
-			>
-				{{messages.password}}
+			<Message v-if="messages.password" severity="success">
+				{{ messages.password }}
 			</Message>
 
-			<Message v-if="errorMessages.password"
-				severity="error"
-			>
-				{{errorMessages.password}}
+			<Message v-if="errorMessages.password" severity="error">
+				{{ errorMessages.password }}
 			</Message>
 		</div>
 
 		<div class="form__actions">
-			<Button
-				label="Update"
-				type="submit"
-				:loading="isLoading"
-			/>
+			<Button label="Update" type="submit" :loading="isLoading" />
 		</div>
 	</form>
 </template>
-
 
 <style scoped lang="scss">
 form {
@@ -163,5 +135,4 @@ form {
 	display: flex;
 	flex-direction: column;
 }
-
 </style>

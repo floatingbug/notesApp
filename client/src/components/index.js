@@ -1,10 +1,11 @@
-export {default as Topbar} from "./topbar/Topbar.vue";
-export {default as Navigation} from "./navigation/Navigation.vue";
-export {default as UserMenu} from "./userMenu/UserMenu.vue";
-export {default as Footer} from "./footer/Footer.vue";
-export {default as Logo} from "./logo/Logo.vue";
-export {default as Sidebar} from "./sidebar/Sidebar.vue";
-export {default as NavToggle} from "./navToggle/NavToggle.vue";
-export {default as BreadcrumbPath} from "./breadcrumbPath/BreadcrumbPath.vue";
-export {default as CurrPath} from "./currPath/CurrPath.vue";
-export {default as SidebarDrawer} from "./sidebarDrawer/SidebarDrawer.vue";
+export { default as Topbar } from './topbar/Topbar.vue'
+export { default as Navigation } from './navigation/Navigation.vue'
+export { default as UserMenu } from './userMenu/UserMenu.vue'
+export { default as Footer } from './footer/Footer.vue'
+export { default as Logo } from './logo/Logo.vue'
+export { default as Sidebar } from './sidebar/Sidebar.vue'
+export { default as NavToggle } from './navToggle/NavToggle.vue'
+export { default as BreadcrumbPath } from './breadcrumbPath/BreadcrumbPath.vue'
+export { default as CurrPath } from './currPath/CurrPath.vue'
+export { default as SidebarDrawer } from './sidebarDrawer/SidebarDrawer.vue'
+export { default as BottomBar} from './bottomBar/BottomBar.vue'

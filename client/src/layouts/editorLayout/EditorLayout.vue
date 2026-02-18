@@ -1,113 +1,110 @@
 <script setup>
-import {ref} from "vue";
-import {TopNavigation, MobileToolsSheet, MobileNavigationDrawer, ToolRail} from "@/components/ui";
-import {useNavigationStore} from "@/stores/useNavigationStore.js";
-import {useToolsStore} from "@/stores/useToolsStore.js";
+import { ref } from 'vue'
+import {useRouter} from "vue-router";
+import { Topbar, UserMenu, Logo, NavToggle, Sidebar, BottomBar } from '@/components'
+import {sidebarItems, bottomBarItems} from "@/modules/tasks/config";
+import { useToolsStore } from '@/stores/useToolsStore.js'
 
-const navStore = useNavigationStore();
-const toolsStore = useToolsStore();
-const isMobileToolsSheetOpen = ref(false);
-const isMobileNavOpen = ref(false);
+const router = useRouter();
+const toolsStore = useToolsStore()
+const isMobileToolsSheetOpen = ref(false)
+const isMobileNavOpen = ref(false)
+const isSidebarDrawerVisible = ref(false);
 
-function onNavigationAction(event) {
-  switch (event.action) {
-    case "closeMobileNavigation":
-      isMobileNavOpen.value = false;
-      break;
-    case "openMobileNavigation":
-      isMobileNavOpen.value = true;
-      break;
-    case "toggleMobileNavigation":
-      isMobileNavOpen.value = !isMobileNavOpen.value;
-      break;
-  }
+async function onUserMenuAction(event) {
+	switch (event.action) {
+		case 'openSettings':
+			router.push('/settings')
+		break
+
+		case 'signOut':
+			await authStore.signOut()
+			router.push('/auth/signin')
+		break
+	}
 }
-
-function onToolAction(event){
-  switch(event.action){
-    case "toolSelected" :
-    toolsStore.triggerTool(event.toolAction);
-    isMobileToolsSheetOpen.value = false;
-    break;
-    case "toggleToolsSheet" :
-    isMobileToolsSheetOpen.value = !isMobileToolsSheetOpen.value;
-    break;
-  }
-}
-
 </script>
 
 <template>
-  <div class="app">
-    <!-- top navigation bar -->
-    <div class="topbar-container">
-      <TopNavigation
-        :userItems="navStore.userItems"
-        :navItems="navStore.navItems"
-        @navigation:action="onNavigationAction"
-      />
-    </div>
+	<div class="editor-layout">
+		<header>
+		    <Topbar>
+		    	<template #topbarLeft>
+					<Logo @logo:press="router.push('/dashboard')" />
+		    	</template>
+		    
+		    	<template #topbarRight>
+		    		<UserMenu @userMenu:action="onUserMenuAction" />
+		    	</template>
+		    </Topbar>
+		</header>
 
-    <!-- tool rail (only desktop) -->
-    <div class="tool-rail-container desktop-only">
-      <ToolRail
-        :tools="toolsStore.toolsItems"
-        :activeTool="toolsStore.activeTool"
-        @tool:action="onToolAction"
-      />
-    </div>
+        <aside>
+			<Sidebar class="desktop-only"
+                :items="sidebarItems" 
+            />
+        </aside>
 
-    <!-- tools sheet (only mobile) -->
-    <Button class="toggle-mobile-tools mobile-only"
-      icon="pi pi-cog"
-      variant="text"
-      severity="contrast"
-      raised
-      rounded
-      @click="isMobileToolsSheetOpen = !isMobileToolsSheetOpen"
-    />
+		<main>
+			<div class="main-content">
+				<RouterView />
+			</div>
+		</main>
 
-    <div class="tools-sheet-container mobile-only">
-      <MobileToolsSheet
-        :toolsItems="toolsStore.toolsItems"
-        :visible="isMobileToolsSheetOpen"
-        @tool:action="onToolAction"
-      />
-    </div>
-
-    <!-- mobile nav -->
-    <div class="navigation-drawer-container">
-      <MobileNavigationDrawer
-        :items="navStore.navItems"
-        :visible="isMobileNavOpen"
-        @navigation:action="onNavigationAction"
-      />
-    </div>
-
-    <!-- Page content -->
-    <main>
-      <RouterView />
-    </main>
-  </div>
+        <footer>
+            <BottomBar class="mobile-only"
+                :itemsButton="bottomBarItems.itemsButton" 
+                :createMenuItems="bottomBarItems.createMenuItems" 
+                :listMenuItems="bottomBarItems.listMenuItems" 
+            />
+        </footer>
+	</div>
 </template>
 
 <style scoped lang="scss">
-@use "../styles/media" as *;
-@use "../styles/breakpoints" as *;
+@use '@/styles/media' as *;
+@use '@/styles/breakpoints' as *;
 
-.toggle-mobile-tools {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  width: 56px;
-  height: 56px;
-  cursor: pointer;
-  z-index: 100;
+.editor-layout {
+	height: 100%;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr auto;
+	grid-template-areas:
+		'top top'
+		'aside main'
+        "footer footer";
 }
 
-@include up($bp-lg) {
-  .mobile-only {
-    display: none;
-  }
+header {
+	grid-area: top;
+	height: var(--topbar-height);
+	z-index: 500;
+}
+
+aside {
+	grid-area: aside;
+	z-index: 100;
+}
+
+main {
+	grid-area: main;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.main-content {
+	width: 100%;
+	max-width: 1200px;
+    margin-bottom: 12rem;
+}
+
+footer {
+    width: 100dvw;
+    height: 56px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 </style>

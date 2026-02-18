@@ -1,48 +1,46 @@
 <script setup>
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import {resetPassword} from "../api/auth.api.js";
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { resetPassword } from '../api/auth.api.js'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const token = route.query.token;
+const token = route.query.token
 
-const password = ref("");
-const confirmPassword = ref("");
+const password = ref('')
+const confirmPassword = ref('')
 
-const isLoading = ref(false);
-const message = ref("");
-const errorMessage = ref("");
+const isLoading = ref(false)
+const message = ref('')
+const errorMessage = ref('')
 
 async function onSubmit() {
-	errorMessage.value = "";
-	message.value = "";
+	errorMessage.value = ''
+	message.value = ''
 
 	if (!token) {
-		errorMessage.value = "Invalid or missing reset token.";
-		return;
+		errorMessage.value = 'Invalid or missing reset token.'
+		return
 	}
 
 	if (password.value !== confirmPassword.value) {
-		errorMessage.value = "Passwords do not match.";
-		return;
+		errorMessage.value = 'Passwords do not match.'
+		return
 	}
 
-	isLoading.value = true;
+	isLoading.value = true
 
 	try {
-		const responseResetPassword = await resetPassword({ token, password: password.value });
+		const responseResetPassword = await resetPassword({ token, password: password.value })
 
-		message.value = "Your password has been reset successfully.";
-		setTimeout(() => router.push("/auth/signin"), 2000);
-	}
-	catch (error) {
-		console.log(error);
-		errorMessage.value = "The reset link is invalid or has expired.";
-	}
-	finally {
-		isLoading.value = false;
+		message.value = 'Your password has been reset successfully.'
+		setTimeout(() => router.push('/auth/signin'), 2000)
+	} catch (error) {
+		console.log(error)
+		errorMessage.value = 'The reset link is invalid or has expired.'
+	} finally {
+		isLoading.value = false
 	}
 }
 </script>
@@ -55,20 +53,12 @@ async function onSubmit() {
 			<form @submit.prevent="onSubmit" class="reset-password__form">
 				<div class="form__field">
 					<label class="form__label">New password</label>
-					<InputText
-						type="password"
-						v-model="password"
-						required
-					/>
+					<InputText type="password" v-model="password" required />
 				</div>
 
 				<div class="form__field">
 					<label class="form__label">Confirm password</label>
-					<InputText
-						type="password"
-						v-model="confirmPassword"
-						required
-					/>
+					<InputText type="password" v-model="confirmPassword" required />
 				</div>
 
 				<div v-if="message" class="message">
@@ -79,11 +69,7 @@ async function onSubmit() {
 					{{ errorMessage }}
 				</div>
 
-				<Button
-					type="submit"
-					label="Reset password"
-					:loading="isLoading"
-				/>
+				<Button type="submit" label="Reset password" :loading="isLoading" />
 			</form>
 		</div>
 	</div>

@@ -1,27 +1,27 @@
-import axios from "axios";
-import { useAuthStore } from "@/stores/useAuthStore.js";
-import {API_BASE_URL} from "@/config/env.js";
+import axios from 'axios'
+import { useAuthStore } from '@/stores/useAuthStore.js'
+import { API_BASE_URL } from '@/config/env.js'
+
+console.log(API_BASE_URL)
 
 const http = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
+	baseURL: API_BASE_URL,
+	timeout: 10000,
+	headers: { 'Content-Type': 'application/json' },
+	withCredentials: true,
+})
 
 /**
  * Attach access token to every request
  */
 http.interceptors.request.use((config) => {
-  const authStore = useAuthStore();
+	const authStore = useAuthStore()
 
-  if (authStore.token) {
-    config.headers.Authorization = `Bearer ${authStore.token}`;
-  }
+	if (authStore.token) {
+		config.headers.Authorization = `Bearer ${authStore.token}`
+	}
 
+	return config
+})
 
-  return config;
-});
-
-
-export default http;
+export default http

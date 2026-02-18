@@ -1,30 +1,28 @@
 <script setup>
-import { ref } from "vue";
-import Button from "primevue/button";
-import InputText from "primevue/inputtext";
-import {requestPasswordReset} from "../api/auth.api.js";
+import { ref } from 'vue'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import { requestPasswordReset } from '../api/auth.api.js'
 
-const email = ref("");
-const isLoading = ref(false);
-const message = ref("");
-const errorMessage = ref("");
+const email = ref('')
+const isLoading = ref(false)
+const message = ref('')
+const errorMessage = ref('')
 
 async function onSubmit() {
-	isLoading.value = true;
-	message.value = "";
-	errorMessage.value = "";
+	isLoading.value = true
+	message.value = ''
+	errorMessage.value = ''
 
 	try {
-		await requestPasswordReset({ email: email.value });
+		await requestPasswordReset({ email: email.value })
 
 		message.value =
-			"If an account with this email exists, you will receive a password reset link shortly.";
-	}
-	catch (error) {
-		errorMessage.value = "Something went wrong. Please try again later.";
-	}
-	finally {
-		isLoading.value = false;
+			'If an account with this email exists, you will receive a password reset link shortly.'
+	} catch (error) {
+		errorMessage.value = 'Something went wrong. Please try again later.'
+	} finally {
+		isLoading.value = false
 	}
 }
 </script>
@@ -32,9 +30,7 @@ async function onSubmit() {
 <template>
 	<div class="forgot-password">
 		<div class="card forgot-password__card">
-			<h2 class="forgot-password__title">
-				Forgot your password?
-			</h2>
+			<h2 class="forgot-password__title">Forgot your password?</h2>
 
 			<p class="forgot-password__description">
 				Enter your email address and we will send you a link to reset your password.
@@ -42,9 +38,7 @@ async function onSubmit() {
 
 			<form @submit.prevent="onSubmit" class="forgot-password__form">
 				<div class="form__field">
-					<label class="form__label" for="email">
-						Email address
-					</label>
+					<label class="form__label" for="email"> Email address </label>
 
 					<InputText
 						id="email"

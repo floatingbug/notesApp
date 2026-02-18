@@ -1,20 +1,20 @@
-@use "./media" as *;
-@use "./breakpoints" as *;
+@use './media' as *;
+@use './breakpoints' as *;
 
 .desktop-only {
-  display: none;
+	display: none;
 }
 
 .mobile-only {
-  display: block;
+	display: block;
 }
 
 @include up($bp-md) {
-  .desktop-only {
-    display: flex;
-  }
+	.desktop-only {
+		display: flex;
+	}
 
-  .mobile-only {
-    display: none;
-  }
+	.mobile-only {
+		display: none;
+	}
 }

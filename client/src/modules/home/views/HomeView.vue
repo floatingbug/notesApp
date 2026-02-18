@@ -1,7 +1,12 @@
-<script setup></script>
+<script setup>
+import { HeroSection, FeaturesSection, CTASection, TestimonialsSection } from '../components'
+</script>
 
-
-<template></template>
-
-
-<style scoped></style>
+<template>
+	<div class="home">
+		<HeroSection />
+		<FeaturesSection />
+		<CTASection />
+		<TestimonialsSection />
+	</div>
+</template>

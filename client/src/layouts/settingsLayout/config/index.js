@@ -1,1 +1,1 @@
-export {sidebarItems} from "./sidebarItems.js";
+export { sidebarItems } from './sidebarItems.js'

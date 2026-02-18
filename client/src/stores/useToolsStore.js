@@ -1,23 +1,23 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useToolsStore = defineStore("toolsStore", {
-  state: () => ({
-    toolsItems: [
-      { label: "tool", action: "", icon: "pi pi-plus" },
-      { label: "tool", action: "", icon: "pi pi-plus" },
-      { label: "tool", action: "", icon: "pi pi-plus" },
-    ],
+export const useToolsStore = defineStore('toolsStore', {
+	state: () => ({
+		toolsItems: [
+			{ label: 'tool', action: '', icon: 'pi pi-plus' },
+			{ label: 'tool', action: '', icon: 'pi pi-plus' },
+			{ label: 'tool', action: '', icon: 'pi pi-plus' },
+		],
 
-    activeToolAction: null,
-  }),
+		activeToolAction: null,
+	}),
 
-  actions: {
-    triggerTool(action) {
-      this.activeToolAction = action;
-    },
+	actions: {
+		triggerTool(action) {
+			this.activeToolAction = action
+		},
 
-    clearToolAction() {
-      this.activeToolAction = null;
-    },
-  },
-});
+		clearToolAction() {
+			this.activeToolAction = null
+		},
+	},
+})
