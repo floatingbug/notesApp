@@ -1,1 +1,1 @@
-export {default as getOverdueTime} from "./getOverdueTime.js";
+export { default as getOverdueTime } from './getOverdueTime.js'

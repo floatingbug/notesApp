@@ -1,1 +1,1 @@
-export {default as TasksCard} from "./tasksCard/TasksCard.vue";
+export { default as TasksCard } from './tasksCard/TasksCard.vue'

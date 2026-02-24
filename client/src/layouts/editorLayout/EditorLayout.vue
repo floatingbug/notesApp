@@ -1,26 +1,26 @@
 <script setup>
 import { ref } from 'vue'
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router'
 import { Topbar, UserMenu, Logo, NavToggle, Sidebar, BottomBar } from '@/components'
-import {sidebarItems, bottomBarItems} from "@/modules/tasks/config";
+import { sidebarItems, bottomBarItems } from '@/modules/tasks/config'
 import { useToolsStore } from '@/stores/useToolsStore.js'
 
-const router = useRouter();
+const router = useRouter()
 const toolsStore = useToolsStore()
 const isMobileToolsSheetOpen = ref(false)
 const isMobileNavOpen = ref(false)
-const isSidebarDrawerVisible = ref(false);
+const isSidebarDrawerVisible = ref(false)
 
 async function onUserMenuAction(event) {
 	switch (event.action) {
 		case 'openSettings':
 			router.push('/settings')
-		break
+			break
 
 		case 'signOut':
 			await authStore.signOut()
 			router.push('/auth/signin')
-		break
+			break
 	}
 }
 </script>
@@ -28,22 +28,20 @@ async function onUserMenuAction(event) {
 <template>
 	<div class="editor-layout">
 		<header>
-		    <Topbar>
-		    	<template #topbarLeft>
+			<Topbar>
+				<template #topbarLeft>
 					<Logo @logo:press="router.push('/dashboard')" />
-		    	</template>
-		    
-		    	<template #topbarRight>
-		    		<UserMenu @userMenu:action="onUserMenuAction" />
-		    	</template>
-		    </Topbar>
+				</template>
+
+				<template #topbarRight>
+					<UserMenu @userMenu:action="onUserMenuAction" />
+				</template>
+			</Topbar>
 		</header>
 
-        <aside>
-			<Sidebar class="desktop-only"
-                :items="sidebarItems" 
-            />
-        </aside>
+		<aside>
+			<Sidebar class="desktop-only" :items="sidebarItems" />
+		</aside>
 
 		<main>
 			<div class="main-content">
@@ -51,13 +49,14 @@ async function onUserMenuAction(event) {
 			</div>
 		</main>
 
-        <footer>
-            <BottomBar class="mobile-only"
-                :itemsButton="bottomBarItems.itemsButton" 
-                :createMenuItems="bottomBarItems.createMenuItems" 
-                :listMenuItems="bottomBarItems.listMenuItems" 
-            />
-        </footer>
+		<footer>
+			<BottomBar
+				class="mobile-only"
+				:itemsButton="bottomBarItems.itemsButton"
+				:createMenuItems="bottomBarItems.createMenuItems"
+				:listMenuItems="bottomBarItems.listMenuItems"
+			/>
+		</footer>
 	</div>
 </template>
 
@@ -73,7 +72,7 @@ async function onUserMenuAction(event) {
 	grid-template-areas:
 		'top top'
 		'aside main'
-        "footer footer";
+		'footer footer';
 }
 
 header {
@@ -97,14 +96,14 @@ main {
 .main-content {
 	width: 100%;
 	max-width: 1200px;
-    margin-bottom: 12rem;
+	margin-bottom: 12rem;
 }
 
 footer {
-    width: 100dvw;
-    height: 56px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
+	width: 100dvw;
+	height: 56px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
 }
 </style>

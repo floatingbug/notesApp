@@ -1,23 +1,18 @@
 <script setup>
-import {ref, onMounted} from "vue";
-import { QuickActions, TasksSection} from '../components'
-import {useTaskStore} from "@/stores";
+import { ref, onMounted } from 'vue'
+import { QuickActions, TasksSection } from '../components'
+import { useTaskStore } from '@/stores'
 
-
-const taskStore = useTaskStore();
-
+const taskStore = useTaskStore()
 
 onMounted(async () => {
-    try{
-        await taskStore.loadInitial();
-    }
-    catch(error){
-        console.log(error);
-    }
-});
-
+	try {
+		await taskStore.loadInitial()
+	} catch (error) {
+		console.log(error)
+	}
+})
 </script>
-
 
 <template>
 	<div class="dashboard-overview">
@@ -26,12 +21,12 @@ onMounted(async () => {
 		</div>
 
 		<div class="dashboard__section dashboard__section--today-tasks">
-            <TasksSection
-                :tasks="taskStore.getCategoryTasks('tasks')"
-                :dueToday="taskStore.getCategoryTasks('dueToday')"
-                :overdue="taskStore.getCategoryTasks('overdue')"
-                :nextUp="taskStore.getCategoryTasks('nextUp')"
-            />
+			<TasksSection
+				:tasks="taskStore.getCategoryItems('tasks')"
+				:dueToday="taskStore.getCategoryItems('dueToday')"
+				:overdue="taskStore.getCategoryItems('overdue')"
+				:nextUp="taskStore.getCategoryItems('nextUp')"
+			/>
 		</div>
 	</div>
 </template>

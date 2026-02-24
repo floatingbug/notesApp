@@ -27,6 +27,10 @@
 	grid-template-columns: 1fr;
 	justify-content: center;
 	gap: var(--space-md);
+
+    .p-button {
+        text-decoration: none;
+    }
 }
 
 .action__button {

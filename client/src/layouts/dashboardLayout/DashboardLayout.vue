@@ -113,6 +113,6 @@ main {
 .main-content {
 	width: 100%;
 	max-width: 1200px;
-    margin-bottom: 12rem;
+	margin-bottom: 12rem;
 }
 </style>

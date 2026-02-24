@@ -1,1 +1,1 @@
-import http from "@/services/http.service.js";
+import http from '@/services/http.service.js'

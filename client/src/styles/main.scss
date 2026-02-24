@@ -7,7 +7,7 @@
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-xs);
 	padding: var(--space-xl);
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .overlay {
@@ -24,81 +24,81 @@
 }
 
 .link-reset {
-    text-decoration: none;
-    color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 
 .transparent-modal {
-    background-color: hsl(from var(--color-surface-bottom) h s l / 50%);
-    backdrop-filter: blur(8px);
+	background-color: hsl(from var(--color-surface-bottom) h s l / 50%);
+	backdrop-filter: blur(8px);
 }
 
 /* ===========================
    Base Heading
    =========================== */
 .heading {
-    font-family: var(--font-sans, sans-serif);
-    color: var(--color-text);
-    line-height: 1.4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	font-family: var(--font-sans, sans-serif);
+	color: var(--color-text);
+	line-height: 1.4;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* ===========================
    Primary Heading
    =========================== */
 .heading-primary {
-    @extend .heading;
-    font-size: var(--font-size-2xl);  // 24px
-    font-weight: 700;
-    padding: var(--space-xs) 0;       // kleiner vertikaler Abstand
+	@extend .heading;
+	font-size: var(--font-size-2xl); // 24px
+	font-weight: 700;
+	padding: var(--space-xs) 0; // kleiner vertikaler Abstand
 }
 
 /* ===========================
    Secondary Heading
    =========================== */
 .heading-secondary {
-    @extend .heading;
-    font-size: var(--font-size-xl);   // 20px
-    font-weight: 600;
-    color: var(--color-text-muted);
-    padding: var(--space-xs) 0;
+	@extend .heading;
+	font-size: var(--font-size-xl); // 20px
+	font-weight: 600;
+	color: var(--color-text-muted);
+	padding: var(--space-xs) 0;
 }
 
 /* ===========================
    Tertiary Heading
    =========================== */
 .heading-tertiary {
-    @extend .heading;
-    font-size: var(--font-size-lg);   // 18px
-    font-weight: 500;
-    color: var(--color-text-muted);
-    padding: var(--space-2xs) 0;
+	@extend .heading;
+	font-size: var(--font-size-lg); // 18px
+	font-weight: 500;
+	color: var(--color-text-muted);
+	padding: var(--space-2xs) 0;
 }
 
 /* ===========================
    Multiline Handling (optional)
    =========================== */
 .heading-multiline {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;      // max. 2 Zeilen
-    -webkit-box-orient: vertical;
-    white-space: normal;
-    overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; // max. 2 Zeilen
+	-webkit-box-orient: vertical;
+	white-space: normal;
+	overflow: hidden;
 }
 
 /* ===========================
    Responsive Anpassungen
    =========================== */
 @media (max-width: 600px) {
-    .heading-primary {
-        font-size: var(--font-size-xl);
-    }
-    .heading-secondary {
-        font-size: var(--font-size-lg);
-    }
-    .heading-tertiary {
-        font-size: var(--font-size-md);
-    }
+	.heading-primary {
+		font-size: var(--font-size-xl);
+	}
+	.heading-secondary {
+		font-size: var(--font-size-lg);
+	}
+	.heading-tertiary {
+		font-size: var(--font-size-md);
+	}
 }

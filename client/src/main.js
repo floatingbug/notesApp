@@ -16,18 +16,18 @@ import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Card from 'primevue/card'
-import DatePicker from 'primevue/datepicker';
-import Select from 'primevue/select';
-import Tag from 'primevue/tag';
-import Chip from 'primevue/chip';
-import AutoComplete from 'primevue/autocomplete';
-import Toast from 'primevue/toast';
-import Checkbox from 'primevue/checkbox';
-import Accordion from 'primevue/accordion';
-import AccordionPanel from 'primevue/accordionpanel';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
-import DataView from 'primevue/dataview';
+import DatePicker from 'primevue/datepicker'
+import Select from 'primevue/select'
+import Tag from 'primevue/tag'
+import Chip from 'primevue/chip'
+import AutoComplete from 'primevue/autocomplete'
+import Toast from 'primevue/toast'
+import Checkbox from 'primevue/checkbox'
+import Accordion from 'primevue/accordion'
+import AccordionPanel from 'primevue/accordionpanel'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionContent from 'primevue/accordioncontent'
+import DataView from 'primevue/dataview'
 
 import App from './App.vue'
 import router from './router'
@@ -73,7 +73,7 @@ app.component('Accordion', Accordion)
 app.component('AccordionPanel', AccordionPanel)
 app.component('AccordionHeader', AccordionHeader)
 app.component('AccordionContent', AccordionContent)
-app.component("DataView", DataView);
+app.component('DataView', DataView)
 
 app.directive('tooltip', Tooltip)
 

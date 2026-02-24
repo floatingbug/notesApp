@@ -1,86 +1,86 @@
 <script setup>
-import { ref } from "vue";
-import useTaskStore from "@/stores/task/useTaskStore.js";
+import { ref } from 'vue'
 
-const taskStore = useTaskStore();
+const props = defineProps({
+	tags: {
+		type: Array,
+		required: true,
+	},
+})
 
-const newTag = ref("");
+const emit = defineEmits(['tagsEditor:action'])
 
+const newTag = ref('')
+
+// Add a new tag
 function addTag() {
-    const value = newTag.value.trim();
+	const value = newTag.value.trim()
 
-    if (!value) {
-        return;
-    }
+	if (!value || props.tags.includes(value)) {
+		return
+	}
 
-    if (!taskStore.selectedTask.tags) {
-        taskStore.selectedTask.tags = [];
-    }
+	emit('tagsEditor:action', {
+		action: 'add',
+		value,
+	})
 
-    if (!taskStore.selectedTask.tags.includes(value)) {
-        taskStore.selectedTask.tags.push(value);
-    }
-
-    newTag.value = "";
+	newTag.value = ''
 }
 
-
-function removeTag(tagToRemove) {
-    taskStore.selectedTask.tags = taskStore.selectedTask.tags.filter(
-        (t) => t !== tagToRemove
-    );
+// Remove a tag
+function removeTag(index) {
+	emit('tagsEditor:action', {
+		action: 'remove',
+		index,
+	})
 }
 </script>
 
 <template>
-    <div class="task-tags-editor">
-        <label>Tags</label>
+	<div class="task-tags-editor">
+		<label>Tags</label>
 
-        <div class="tag-input">
-            <InputText
-                v-model="newTag"
-                placeholder="Add tag"
-                @keyup.enter="addTag"
-            />
-            <Button
-                icon="pi pi-plus"
-                severity="secondary"
-                @click="addTag"
-            />
-        </div>
+		<div class="tag-input">
+			<InputText v-model="newTag" placeholder="Add tag" @keyup.enter="addTag" />
+			<Button icon="pi pi-plus" severity="secondary" @click="addTag" />
+		</div>
 
-        <div class="tag-list">
-            <Chip
-                v-for="tag in taskStore.selectedTask.tags"
-                :key="tag"
-                :label="tag"
-                removable
-                @remove="removeTag(tag)"
-            />
-        </div>
-    </div>
+		<div class="tag-list">
+			<Tag
+				v-for="(tag, index) in tags"
+				:key="tag"
+				:value="tag"
+				@click="removeTag(index)"
+			/>
+		</div>
+	</div>
 </template>
 
 <style scoped lang="scss">
 .task-tags-editor {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
 }
 
 .tag-input {
-    display: flex;
-    gap: var(--space-xs);
+	display: flex;
+	gap: var(--space-xs);
 
-    .p-inputtext {
-        width: 100%;
-        min-width: 0;
-    }
+	.p-inputtext {
+		width: 100%;
+		min-width: 0;
+	}
 }
 
 .tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
+
+    .p-tag {
+        cursor: pointer;
+    }
 }
 </style>

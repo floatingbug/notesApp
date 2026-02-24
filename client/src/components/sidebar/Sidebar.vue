@@ -17,7 +17,9 @@ const props = defineProps({
 		}"
 	>
 		<template #item="{ item }">
-			<Button class="sidebar__item" v-if="item.type === 'link'"
+			<Button
+				class="sidebar__item"
+				v-if="item.type === 'link'"
 				as="router-link"
 				:to="item.to"
 				:icon="item.icon"
@@ -25,11 +27,13 @@ const props = defineProps({
 				variant="text"
 				size="small"
 			/>
-			<Button class="sidebar__item-btn-only" v-if="item.type === 'btnOnly'"
-                as="router-link"
-                :to="item.to"
+			<Button
+				class="sidebar__item-btn-only"
+				v-if="item.type === 'btnOnly'"
+				as="router-link"
+				:to="item.to"
 				:icon="item.icon"
-                variant="text"
+				variant="text"
 			/>
 		</template>
 	</Menu>
@@ -52,7 +56,7 @@ const props = defineProps({
 }
 
 .p-menu-item-content {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 </style>

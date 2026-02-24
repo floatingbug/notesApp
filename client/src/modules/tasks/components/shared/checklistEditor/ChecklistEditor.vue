@@ -1,112 +1,112 @@
 <script setup>
-import { ref } from "vue";
-import useTaskStore from "@/stores/task/useTaskStore.js";
+import { ref } from 'vue'
 
-const taskStore = useTaskStore();
+const props = defineProps({
+	checklist: {
+		type: Array,
+		required: true,
+	},
+})
 
-const newItem = ref("");
+const emit = defineEmits(['checklistEditor:action'])
+
+const newItem = ref('')
 
 function addItem() {
-    const value = newItem.value.trim();
+	const value = newItem.value.trim()
 
-    if (!value) {
-        return;
-    }
+	if (!value) {
+		return
+	}
 
-    if (!taskStore.selectedTask.checklist) {
-        taskStore.selectedTask.checklist = [];
-    }
+	emit('checklistEditor:action', {
+		action: 'add',
+		value: { text: value, done: false },
+	})
 
-    taskStore.selectedTask.checklist.push({
-        text: value,
-        completed: false
-    });
-
-    newItem.value = "";
+	newItem.value = ''
 }
 
 function removeItem(index) {
-    taskStore.selectedTask.checklist.splice(index, 1);
+	emit('checklistEditor:action', {
+		action: 'remove',
+		index,
+	})
+}
+
+function toggleItem(id) {
+	emit('checklistEditor:action', {
+		action: 'toggle',
+		id,
+	})
 }
 </script>
 
 <template>
-    <div class="task-checklist-editor">
-        <label>Checklist</label>
+	<div class="task-checklist-editor">
+		<label>Checklist</label>
 
-        <div class="checklist-input">
-            <InputText
-                v-model="newItem"
-                placeholder="Add checklist item"
-                @keyup.enter="addItem"
-            />
-            <Button
-                icon="pi pi-plus"
-                severity="secondary"
-                @click="addItem"
-            />
-        </div>
+		<div class="checklist-input">
+			<InputText v-model="newItem" placeholder="Add checklist item" @keyup.enter="addItem" />
 
-        <div class="checklist-items">
-            <div
-                v-for="(item, index) in taskStore.selectedTask.checklist"
-                :key="index"
-                class="checklist-item"
-            >
-                <Checkbox
-                    v-model="item.completed"
-                    binary
-                />
+			<Button icon="pi pi-plus" severity="secondary" @click="addItem" />
+		</div>
 
-                <span
-                    :class="{ completed: item.completed }"
-                >
-                    {{ item.text }}
-                </span>
+		<div class="checklist-items">
+			<div v-for="(item, index) in checklist" :key="item.id" class="checklist-item">
+				<Checkbox
+					:model-value="item.completed"
+					@update:model-value="() => toggleItem(item.id)"
+					binary
+				/>
 
-                <Button
-                    icon="pi pi-trash"
-                    severity="danger"
-                    variant="text"
-                    @click="removeItem(index)"
-                />
-            </div>
-        </div>
-    </div>
+				<span :class="{ completed: item.completed }">
+					{{ item.text }}
+				</span>
+
+				<Button
+					icon="pi pi-trash"
+					severity="danger"
+					variant="text"
+					@click="removeItem(index)"
+				/>
+			</div>
+		</div>
+	</div>
 </template>
 
 <style scoped lang="scss">
 .task-checklist-editor {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
 }
 
 .checklist-input {
-    flex-shrink: 1;
-    display: flex;
-    gap: var(--space-xs);
+	flex-shrink: 1;
+	display: flex;
+	gap: var(--space-xs);
 
-    .p-inputtext{
-        width: 100%;
-        min-width: 0;
-    }
+	.p-inputtext {
+		width: 100%;
+		min-width: 0;
+	}
 }
 
 .checklist-items {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
 }
 
 .checklist-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
 }
 
 .completed {
-    text-decoration: line-through;
-    opacity: 0.6;
+	text-decoration: line-through;
+	opacity: 0.6;
 }
 </style>

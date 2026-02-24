@@ -3,22 +3,22 @@ export const dashboardItems = [
 		label: 'Lists/Editing',
 		items: [
 			{
-                type: "link",
+				type: 'link',
 				label: 'Note',
 				icon: 'pi pi-pencil',
-				to: '/editor/note',
+				to: '/notes',
 			},
 			{
-                type: "link",
+				type: 'link',
 				label: 'Tasks',
 				icon: 'pi pi-check-square',
-				to: '/editor/task',
+				to: '/tasks',
 			},
 			{
-                type: "link",
+				type: 'link',
 				label: 'Ideas',
 				icon: 'pi pi-lightbulb',
-				to: '/editor/idea',
+				to: '/ideas',
 			},
 		],
 	},
@@ -26,14 +26,14 @@ export const dashboardItems = [
 		label: 'Library',
 		items: [
 			{
-                type: "link",
+				type: 'link',
 				action: 'allNotes',
 				label: 'All Notes',
 				icon: 'pi pi-book',
 				to: '/notes', // Organized & Searchable
 			},
 			{
-                type: "link",
+				type: 'link',
 				action: 'sharedNotes',
 				label: 'Shared Notes',
 				icon: 'pi pi-users',
@@ -45,14 +45,14 @@ export const dashboardItems = [
 		label: 'Settings',
 		items: [
 			{
-                type: "link",
+				type: 'link',
 				action: 'syncSecurity',
 				label: 'Sync & Security',
 				icon: 'pi pi-lock',
 				to: '/settings/sync', // Secure & Cloud-Based
 			},
 			{
-                type: "link",
+				type: 'link',
 				action: 'account',
 				label: 'Account',
 				icon: 'pi pi-user',

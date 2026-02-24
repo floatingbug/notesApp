@@ -100,17 +100,17 @@
 	--color-hover-light: rgba(0, 0, 0, 0.04);
 	--color-active-light: rgba(0, 0, 0, 0.06);
 
-    /* Bars */
+	/* Bars */
 	--color-topbar: var(--p-primary-100);
 	--color-bottom-bar: var(--p-primary-100);
 
 	/* Overlay */
 	--color-overlay: hsl(from var(--p-surface-500) h s l / 50%);
 
-    /* Priority */
-    --color-priority-low: var(--p-green-500);
-    --color-priority-medium: var(--p-orange-500);
-    --color-priority-high: var(--p-red-500);
+	/* Priority */
+	--color-priority-low: var(--p-green-500);
+	--color-priority-medium: var(--p-orange-500);
+	--color-priority-high: var(--p-red-500);
 }
 
 /* ===========================
@@ -165,6 +165,6 @@ html.dark-mode {
 	--z-dropdown: 500;
 	--z-modal: 1000;
 	--z-tools-sheet: 1200;
-    --z-topbar: 500;
-    --z-bottom-bar: 500;
+	--z-topbar: 500;
+	--z-bottom-bar: 500;
 }

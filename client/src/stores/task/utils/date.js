@@ -6,13 +6,9 @@
  * @returns {Date}
  */
 function toDay(date) {
-    const d = new Date(date);
+	const d = new Date(date)
 
-    return new Date(
-        d.getFullYear(),
-        d.getMonth(),
-        d.getDate()
-    );
+	return new Date(d.getFullYear(), d.getMonth(), d.getDate())
 }
 
 /**
@@ -21,14 +17,14 @@ function toDay(date) {
  * @returns {boolean}
  */
 export function isToday(date) {
-    if (!date) {
-        return false;
-    }
+	if (!date) {
+		return false
+	}
 
-    const day = toDay(date);
-    const today = toDay(new Date());
+	const day = toDay(date)
+	const today = toDay(new Date())
 
-    return day.getTime() === today.getTime();
+	return day.getTime() === today.getTime()
 }
 
 /**
@@ -38,14 +34,14 @@ export function isToday(date) {
  * @returns {boolean}
  */
 export function isOverdue(date) {
-    if (!date) {
-        return false;
-    }
+	if (!date) {
+		return false
+	}
 
-    const day = toDay(date);
-    const today = toDay(new Date());
+	const day = toDay(date)
+	const today = toDay(new Date())
 
-    return day < today;
+	return day < today
 }
 
 /**
@@ -54,14 +50,14 @@ export function isOverdue(date) {
  * @returns {boolean}
  */
 export function isFuture(date) {
-    if (!date) {
-        return false;
-    }
+	if (!date) {
+		return false
+	}
 
-    const day = toDay(date);
-    const today = toDay(new Date());
+	const day = toDay(date)
+	const today = toDay(new Date())
 
-    return day > today;
+	return day > today
 }
 
 /**
@@ -70,14 +66,14 @@ export function isFuture(date) {
  * @returns {string}
  */
 export function formatDate(date) {
-    if (!date) {
-        return '';
-    }
+	if (!date) {
+		return ''
+	}
 
-    const d = new Date(date);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
+	const d = new Date(date)
+	const yyyy = d.getFullYear()
+	const mm = String(d.getMonth() + 1).padStart(2, '0')
+	const dd = String(d.getDate()).padStart(2, '0')
 
-    return `${yyyy}-${mm}-${dd}`;
+	return `${yyyy}-${mm}-${dd}`
 }

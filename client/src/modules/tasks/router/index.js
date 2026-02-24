@@ -1,13 +1,13 @@
 import { EditorLayout } from '@/layouts'
-import { CreateTaskView, TasksView} from '../views'
+import { CreateTaskView, TasksView } from '../views'
 
 export default [
 	{
 		path: '/tasks',
 		component: EditorLayout,
-        meta: {
-            breadcrumb: "Tasks",
-        },
+		meta: {
+			breadcrumb: 'Tasks',
+		},
 		children: [
 			{
 				path: 'create',

@@ -1,1 +1,1 @@
-export {default as TaskListItem} from "./taskListItem/TaskListItem.vue";
+export { default as TaskListItem } from './taskListItem/TaskListItem.vue'
