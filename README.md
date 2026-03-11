@@ -12,4 +12,4 @@
 
 ### Architecture
 
-![[docs/architecture.png]]
+![[/docs/architecture.png]]
