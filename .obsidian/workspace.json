@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "client/README.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
@@ -185,6 +185,7 @@
   },
   "active": "9dd240c66e91a46c",
   "lastOpenFiles": [
+    "client/README.md",
     "README.md~",
     "client/docs/architecture.png.crswap",
     "client/docs/architecture.excalidraw.crswap",

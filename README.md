@@ -12,3 +12,4 @@
 
 ### Architecture
 
+![[architecture.png]]
