@@ -5,6 +5,8 @@ const {randomUUID} = require("crypto");
 module.exports = async ({userId, taskId, key, value}) => {
     let normalizedValue = value;
 
+    console.log(userId, taskId, key, value);
+
     // add id to checklist item
     if (key === 'checklist' && Array.isArray(value)){
 

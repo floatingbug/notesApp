@@ -1,7 +1,15 @@
-export { default as loadInitial } from './loadInitial.js'
-export { default as loadMore } from './loadMore.js'
-export { default as selectTask } from './selectTask.js'
-export { default as getCategoryTasks } from './getCategoryTasks.js'
-export { default as checklistRemoveItem } from './checklistRemoveItem.js'
-export { default as checklistToggleDone} from './checklistToggleDone.js'
-export { default as tagsRemoveItem} from './tagsRemoveItem.js'
+import loadInitial from './loadInitial.js'
+import loadMore from './loadMore.js'
+import getCategoryTasks from './getCategoryTasks.js'
+import checklistRemoveItem from './checklistRemoveItem.js'
+import checklistToggleDone from './checklistToggleDone.js'
+import tagsRemoveItem from './tagsRemoveItem.js'
+
+export default {
+    loadInitial,
+    loadMore,
+    getCategoryTasks,
+    checklistRemoveItem,
+    checklistToggleDone,
+    tagsRemoveItem,
+}

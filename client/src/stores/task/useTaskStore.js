@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import * as actions from './actions/index.js'
-import { patch, entityAPI } from '../shared/entity/index.js'
+import actions from './actions'
+import entityActions from '../entity/actions'
 
 export default defineStore('task', {
 	state: () => ({
@@ -8,8 +8,7 @@ export default defineStore('task', {
 		loading: false,
 		limit: 10,
 		selectedEntityId: null,
-		editItem: null,
-		itemsById: {},
+		entitiesById: {},
 		debounceTimers: {},
 		pendingPayloads: {},
 
@@ -31,35 +30,21 @@ export default defineStore('task', {
 				nextCursor: null,
 			},
 		},
-
-		entityAPI,
 	}),
 
-	getters: {
-		selectedItem(state) {
-			return state.editItem
-		},
-
-		getCategoryItems(state) {
-			return function (category) {
-				return state.categories[category].ids.map((id) => state.itemsById[id])
-			}
-		},
-	},
+    getters: {
+        selectedEntity(state) {
+            return state.entitiesById[state.selectedEntityId] || null;
+        },
+        getCategoryItems(state) {
+            return function(category) {
+                return state.categories[category].ids.map(id => state.entitiesById[id])
+            }
+        }
+    },
 
 	actions: {
-		patchEntity(entityId, payload) {
-			patch.patchEntity({ store: this, id, payload })
-		},
-
-		patchEntityDebounced({ entityId, payload }) {
-			patch.patchEntityDebounced({
-				store: this,
-				entityId,
-				payload,
-			})
-		},
-
+        ...entityActions,
 		...actions,
 	},
 })

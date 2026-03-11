@@ -1,15 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 
+const props = defineProps({
+    errors: {
+        type: Object,
+        required: true,
+    },
+});
+
 const emit = defineEmits(['subtasks:action'])
 
 function clearSubtasks() {
 	subtasks.value = []
 }
-
-defineExpose({
-	clearSubtasks,
-})
 
 const newSubtask = ref('')
 const subtasks = ref([])
@@ -69,6 +72,13 @@ function toggleSubtask(index) {
 			<InputText v-model="newSubtask" placeholder="Add checklist" @keyup.enter="addSubtask" />
 			<Button icon="pi pi-plus" @click="addSubtask" type="button" />
 		</div>
+
+        <Message v-if="errors.hasError('checklist')"
+            severity="error"
+            v-for="error in errors.getErrors('checklist')"
+        >
+            {{error}}
+        </Message>
 
 		<ul class="subtasks__list">
 			<li v-for="(task, index) in subtasks" :key="index" class="subtasks__item">

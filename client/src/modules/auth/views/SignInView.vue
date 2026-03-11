@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import { useAuthStore } from '@/stores'
 import { signin } from '../api/auth.api.js'
 import { AuthFormCard } from '../components'
 

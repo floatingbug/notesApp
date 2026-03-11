@@ -82,6 +82,9 @@
 	--color-surface-mid: var(--p-surface-100);
 	--color-surface-top: var(--p-surface-200);
 
+    /*  pinned */
+    --color-pinned: var(--p-green-100);
+
 	/* Borders */
 	--color-border: var(--p-surface-200);
 

@@ -4,9 +4,10 @@ import homeRoutes from '@/modules/home/router'
 import dashboardRoutes from '@/modules/dashboard/router'
 import settingsRoutes from '@/modules/settings/router'
 import taskRoutes from '@/modules/tasks/router'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import noteRoutes from "@/modules/notes/router";
+import { useAuthStore } from '@/stores'
 
-const routes = [...authRoutes, ...homeRoutes, ...dashboardRoutes, ...settingsRoutes, ...taskRoutes]
+const routes = [...authRoutes, ...homeRoutes, ...dashboardRoutes, ...settingsRoutes, ...taskRoutes, ...noteRoutes]
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),

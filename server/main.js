@@ -9,6 +9,7 @@ const errorMiddleware = require('./src/middlewares/error');
 const cookieParser = require("cookie-parser");
 const authRoutes = require('./src/modules/auth');
 const userRoutes = require('./src/modules/user');
+const notesRoutes = require("./src/modules/notes");
 const accountRoutes = require("./src/modules/account");
 const tasksRoutes = require('./src/modules/tasks');
 
@@ -35,6 +36,7 @@ async function start() {
     app.use('/users', userRoutes);
     app.use('/account', accountRoutes);
     app.use('/tasks', tasksRoutes);
+    app.use("/notes", notesRoutes);
 
     app.use(errorMiddleware);
 

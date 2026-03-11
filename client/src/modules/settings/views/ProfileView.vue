@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ProfileForm, DeleteAccount } from '../components'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import { useAuthStore } from '@/stores'
 import { updateAccount, getUser, deleteAccount } from '../api/settings.api.js'
 
 const authStore = useAuthStore()

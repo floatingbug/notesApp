@@ -2,10 +2,15 @@
 
 <template>
 	<div class="quick-actions">
-		<Button class="action__button" icon="pi pi-pencil" label="Add note" outlined />
+		<Button class="action__button" 
+            as="router-link"
+            to="/notes/create"
+            icon="pi pi-pencil" 
+            label="Add note" 
+            outlined 
+        />
 
-		<Button
-			class="action__button"
+		<Button class="action__button"
 			as="router-link"
 			to="/tasks/create"
 			icon="pi pi-check-square"

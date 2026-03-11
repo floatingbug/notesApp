@@ -10,7 +10,7 @@ import {
 	BreadcrumbPath,
 	SidebarDrawer,
 } from '@/components'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import { useAuthStore } from '@/stores'
 import { dashboardItems } from './config/dashboard.config.js'
 
 const authStore = useAuthStore()

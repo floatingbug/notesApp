@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { Topbar, UserMenu, Logo, NavToggle, Sidebar, BottomBar } from '@/components'
-import { sidebarItems, bottomBarItems } from '@/modules/tasks/config'
-import { useToolsStore } from '@/stores/useToolsStore.js'
+import {useAuthStore} from "@/stores";
 
+const authStore = useAuthStore();
 const router = useRouter()
-const toolsStore = useToolsStore()
+const route = useRoute();
 const isMobileToolsSheetOpen = ref(false)
 const isMobileNavOpen = ref(false)
 const isSidebarDrawerVisible = ref(false)
@@ -23,6 +23,14 @@ async function onUserMenuAction(event) {
 			break
 	}
 }
+
+const sidebarItems = computed(() => {
+    return route.meta.sidebarItems || [];
+});
+
+const bottomBarItems = computed(() => {
+    return route.meta.bottomBarItems || [];
+});
 </script>
 
 <template>

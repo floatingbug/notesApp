@@ -1,6 +1,12 @@
+import {patchEntityDebounced} from "../../entity/services";
+
+
 export default function checklistToggleDone({id}){
-    const updatedChecklist = this.editItem.checklist.map(item => {
+    const updatedChecklist = this.selectedEntity.checklist.map(item => {
+
         if (item.id === id){
+        console.log(item);
+        console.log(id);
             return {
                 ...item,
                 done: !item.done,
@@ -11,7 +17,7 @@ export default function checklistToggleDone({id}){
         }
     });
 
-    this.patchEntityDebounced({
+    patchEntityDebounced({
         store: this,
         entityId: this.selectedEntityId,
         payload: { checklist: updatedChecklist },

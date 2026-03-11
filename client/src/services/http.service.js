@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import { useAuthStore } from '@/stores'
 import { API_BASE_URL } from '@/config/env.js'
 
 console.log(API_BASE_URL)

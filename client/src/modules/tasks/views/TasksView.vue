@@ -3,13 +3,15 @@ import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTaskStore } from '@/stores'
 import { TaskList, TaskDetailModal, TaskDetailPanel } from '../components'
+import {useMediaQuery, useErrors} from "@/composables";
 
 const taskStore = useTaskStore()
+const errorStore = useErrors();
 const route = useRoute()
+const {matches: isWideScreen} = useMediaQuery("(min-width: 768px)");
 
 const category = computed(() => route.query.category || 'tasks')
 const showTaskDetails = ref(false)
-const isWideScreen = ref(false)
 
 let mediaQuery
 let mediaQueryHandler
@@ -18,15 +20,6 @@ onMounted(async () => {
 	await taskStore.loadInitial()
 
 	setDefaultTask(category.value)
-
-	mediaQuery = window.matchMedia('(min-width: 768px)')
-	isWideScreen.value = mediaQuery.matches
-
-	mediaQueryHandler = (e) => {
-		isWideScreen.value = e.matches
-	}
-
-	mediaQuery.addEventListener('change', mediaQueryHandler)
 })
 
 onBeforeUnmount(() => {
@@ -44,7 +37,7 @@ function setDefaultTask(categoryName) {
 
 	if (ids.length === 0) {
         taskStore.selectedEntityId = null;
-        taskStore.editItem = null;
+        taskStore.selectedEntity = null;
         
 		return
 	}
@@ -52,10 +45,11 @@ function setDefaultTask(categoryName) {
 	const firstId = ids[0]
 
 	if (!taskStore.selectedEntityId || !ids.includes(taskStore.selectedEntityId)) {
-		taskStore.selectTask(firstId)
+		taskStore.selectEntity(firstId)
 	}
 }
 
+// --- handle events ---
 function onTaskListActions(event) {
 	switch (event.action) {
 		case 'loadMoreTasks':
@@ -64,17 +58,42 @@ function onTaskListActions(event) {
 
 		case 'taskSelected':
 			showTaskDetails.value = true
-			taskStore.selectTask(event.taskId)
+			taskStore.selectEntity(event.taskId)
 			break
 	}
 }
 
-function onTaskDetailActions(event) {
-	switch (event.action) {
-		case 'closeDetail':
-			showTaskDetails.value = false
-			break
+async function onTaskDetailActions(event) {
+    if(event.action === "closeDetail"){
+		showTaskDetails.value = false
+    }
+
+    else if(event.action === "newValue"){
+        try{
+            await taskStore.updateField({
+                field: event.field,
+                value: event.value,
+            });
+        }
+        catch(error){
+            const apiErrors = error.response.data?.errors;
+            errorStore.setErrors(apiErrors);
+        }
 	}
+
+    // remove by index
+    else if(event.action === "remove"){
+        taskStore.removeElement({
+            store: taskStore,
+            field: event.field,
+            index: event.index,
+        });
+    }
+
+    // toggle checklist by id
+    else if(event.action === "toggle" && event.field === "checklist"){
+        taskStore.checklistToggleDone({id: event.id});
+    }
 }
 </script>
 
@@ -95,11 +114,19 @@ function onTaskDetailActions(event) {
 		</TaskList>
 
 		<div class="task-detail-modal-container" v-if="showTaskDetails && !isWideScreen">
-			<TaskDetailModal @taskDetail:action="onTaskDetailActions" />
+			<TaskDetailModal v-if="taskStore.selectedEntity"
+                :task="taskStore.selectedEntity"
+                :errors="errorStore"
+                @taskDetail:action="onTaskDetailActions" 
+            />
 		</div>
 
 		<div class="task-detail-panel-container" v-if="isWideScreen">
-			<TaskDetailPanel />
+			<TaskDetailPanel v-if="taskStore.selectedEntity"
+                :task="taskStore.selectedEntity"
+                :errors="errorStore"
+                @taskDetail:action="onTaskDetailActions" 
+            />
 		</div>
 	</div>
 </template>

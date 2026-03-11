@@ -1,9 +1,9 @@
 export default function tagsRemoveItem({index}){
-	if (!this.editItem?.tags) {
+	if (!this.selectedEntity?.tags) {
 		return
 	}
 
-    const updatedTags = this.editItem.tags.filter((_, i) => i !== index);
+    const updatedTags = this.selectedEntity.tags.filter((_, i) => i !== index);
 
     this.patchEntityDebounced({
         store: this,

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/useAuthStore.js'
+import { useAuthStore } from '@/stores'
 import { Topbar, Logo, UserMenu, NavToggle, Sidebar, SidebarDrawer } from '@/components'
 import { sidebarItems } from './config'
 

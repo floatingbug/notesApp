@@ -24,11 +24,8 @@ const formInputs = reactive({
 	checklist: [],
 })
 const allTags = ['urgent', 'backend', 'frontend', 'cooking']
-const createTagsRef = ref()
-const priorityRef = ref()
-const dateRef = ref()
-const subtasksRef = ref()
 
+// --- store new values ---
 function onPriorityActions(event) {
 	formInputs.priority = event.value
 }
@@ -41,6 +38,7 @@ function onSubtasksActions(event) {
 	formInputs.checklist = event.value
 }
 
+// --- submit form to parent component ---
 function submitForm() {
 	emit('createTaskForm:action', {
 		action: 'submitForm',
@@ -53,20 +51,16 @@ function submitForm() {
 	formInputs.tags = []
 	formInputs.priority = ''
 	formInputs.checklist = []
-
-	createTagsRef.value.clearTags()
-	priorityRef.value.clearPriority()
-	subtasksRef.value.clearSubtasks()
 }
 
+// --- clear all errors ---
 function userInteraction() {
-	emit('createTaskForm:action', { action: 'newUserInteraction' })
+    props.errors.clearErrors();
 }
 </script>
 
 <template>
-	<form
-		class="card"
+    <form
 		@submit.prevent="onSubmit"
 		@keydown="userInteraction"
 		@click="userInteraction"
@@ -74,40 +68,67 @@ function userInteraction() {
 		<div class="form__field">
 			<label for="title">Title</label>
 			<InputText v-model="formInputs.title" />
-			<Message v-if="errors.title" severity="error">
-				{{ errors.title }}
+			<Message v-if="errors.hasError('title')" 
+                severity="error"
+                v-for="error in errors.getErrors('title')"
+            >
+				{{error}}
 			</Message>
 		</div>
 
 		<div class="form__field">
 			<label for="description">Description</label>
 			<Textarea v-model="formInputs.description" />
+			<Message v-if="errors.hasError('description')" 
+                severity="error"
+                v-for="error in errors.getErrors('description')"
+            >
+				{{error}}
+			</Message>
 		</div>
 
 		<div class="form__input-group">
-			<DatePicker
-				v-model="formInputs.date"
-				showTime
-				hourFormat="12"
-				showIcon
-				fluid
-				iconDisplay="input"
-				placeholder="Due date"
-			/>
+			<div class="form__field">
+			    <DatePicker
+			    	v-model="formInputs.date"
+			    	showTime
+			    	hourFormat="12"
+			    	showIcon
+			    	fluid
+			    	iconDisplay="input"
+			    	placeholder="Due date"
+			    />
+                <Message v-if="errors.hasError('date')" 
+                    severity="error"
+                    v-for="error in errors.getErrors('date')"
+                >
+                    {{error}}
+			    </Message>
+			</div>
 
-			<Priority ref="priorityRef" :options="options" @priority:action="onPriorityActions" />
+			<Priority 
+                ref="priorityRef" 
+                :options="options" 
+                :errors="errors"
+                @priority:action="onPriorityActions" 
+            />
 		</div>
 
 		<div class="form__tags">
 			<CreateTags
 				ref="createTagsRef"
 				:suggestions="allTags"
+                :errors="errors"
 				@createTags:action="onCreateTagsActions"
 			/>
 		</div>
 
 		<div class="form__subtasks">
-			<Subtasks ref="subtasksRef" @subtasks:action="onSubtasksActions" />
+			<Subtasks 
+                ref="subtasksRef" 
+                @subtasks:action="onSubtasksActions" 
+                :errors="errors"
+            />
 		</div>
 
 		<div class="form__submit-btn-container">
@@ -122,9 +143,8 @@ function userInteraction() {
 
 form {
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-md);
+	display: grid;
+    row-gap: var(--space-md);
 }
 
 .form__field {
@@ -139,6 +159,7 @@ form {
 	column-gap: var(--space-xl);
 	row-gap: var(--space-sm);
 	margin-top: var(--space-md);
+    align-items: start;
 
 	@include media.up(bp.$bp-sm) {
 		grid-template-columns: 1fr 1fr;
@@ -157,5 +178,16 @@ form {
 	display: flex;
 	justify-content: flex-end;
 	margin-top: var(--space-xl);
+}
+
+@include media.up(bp.$bp-sm) {
+    form {
+        width: 90%;
+        padding: var(--space-md) var(--space-lg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-xs);
+        background-color: var(--color-surfrace-bottom);
+    }
 }
 </style>

@@ -1,28 +1,28 @@
 <script setup>
-import { computed } from 'vue'
-import useTaskStore from '@/stores/task/useTaskStore.js'
+import {ref} from 'vue'
+
+const props = defineProps({
+    selectedPriority: {
+        type: String,
+        required: true,
+    },
+});
 
 const emit = defineEmits(['prioritySelector:action'])
-
-const taskStore = useTaskStore()
 
 const priorities = [
 	{ label: 'Low', value: 'low' },
 	{ label: 'Medium', value: 'medium' },
 	{ label: 'High', value: 'high' },
-]
+];
 
-const selectedPriority = computed({
-	get() {
-		return taskStore.editItem?.priority || 'medium'
-	},
-	set(value) {
-		emit('prioritySelector:action', {
-			action: 'newValue',
-			value,
-		})
-	},
-})
+function onSelectChange(event){
+    emit("prioritySelector:action", {
+        action: "newValue",
+        value: event,
+    });
+}
+
 </script>
 
 <template>
@@ -30,11 +30,12 @@ const selectedPriority = computed({
 		<label>Priority</label>
 
 		<Select
-			v-model="selectedPriority"
+			:modelValue="selectedPriority"
 			:options="priorities"
 			optionLabel="label"
 			optionValue="value"
 			fluid
+            @update:modelValue="onSelectChange"
 		/>
 	</div>
 </template>

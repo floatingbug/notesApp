@@ -1,9 +1,9 @@
 export default function checklistRemoveItem({ index }) {
-	if (!this.editItem?.checklist) {
+	if (!this.selectedEntity?.checklist) {
 		return
 	}
 
-	const updatedChecklist = this.editItem.checklist.filter((_, i) => i !== index)
+	const updatedChecklist = this.selectedEntity.checklist.filter((_, i) => i !== index)
 
 	this.patchEntityDebounced({
 		store: this,

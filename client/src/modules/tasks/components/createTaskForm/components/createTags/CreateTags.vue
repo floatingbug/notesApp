@@ -4,7 +4,7 @@ import { ref, watch, toRaw } from 'vue'
 const props = defineProps({
 	suggestions: {
 		type: Array,
-		default: () => [],
+		default: [],
 	},
 })
 

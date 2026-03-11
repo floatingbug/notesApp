@@ -1,4 +1,4 @@
-import { entityAPI } from '@/stores/shared/entity'
+import { entityAPI} from '@/api'
 
 export default async function loadMore(category) {
 	const current = this.categories[category]
@@ -16,7 +16,7 @@ export default async function loadMore(category) {
 	const entities = data[category].items
 
 	for (const entity of entities) {
-		this.itemsById[entity._id] = {
+		this.entitiesById[entity._id] = {
 			...entity,
 			date: entity.date ? new Date(entity.date) : null,
 		}

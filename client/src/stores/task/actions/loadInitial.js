@@ -1,4 +1,4 @@
-import { entityAPI } from '@/stores/shared/entity'
+import { entityAPI } from '@/api'
 
 export default async function loadInitial() {
 	this.loading = true
@@ -6,14 +6,16 @@ export default async function loadInitial() {
 	const params = new URLSearchParams()
 	params.append('limit', this.limit)
 
-	// fetch tasks via shared API
+	// fetch tasks
 	const data = await entityAPI.fetchEntities('tasks', params.toString())
+
+    console.log(data);
 
 	for (const key in this.categories) {
 		const entities = data[key].items
 
 		for (const entity of entities) {
-			this.itemsById[entity._id] = {
+			this.entitiesById[entity._id] = {
 				...entity,
 				date: entity.date ? new Date(entity.date) : null,
 			}

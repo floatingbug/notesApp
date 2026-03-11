@@ -1,5 +1,6 @@
 import { EditorLayout } from '@/layouts'
 import { CreateTaskView, TasksView } from '../views'
+import {sidebarItems, bottomBarItems} from "./config";
 
 export default [
 	{
@@ -7,6 +8,8 @@ export default [
 		component: EditorLayout,
 		meta: {
 			breadcrumb: 'Tasks',
+            sidebarItems,
+            bottomBarItems,
 		},
 		children: [
 			{

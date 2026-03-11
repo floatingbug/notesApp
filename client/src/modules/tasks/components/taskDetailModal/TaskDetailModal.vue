@@ -1,53 +1,37 @@
 <script setup>
-import { ref} from 'vue'
-import useTaskStore from '@/stores/task/useTaskStore.js'
 import { ChecklistEditor, PrioritySelector, TagsEditor } from '../shared'
-import { updateField } from '@/stores/shared/entity'
+
+const props = defineProps({
+    task: {
+        type: Object,
+        required: true,
+    },
+    errors: {
+        type: Object,
+        default: true,
+    },
+});
 
 const emit = defineEmits(['taskDetail:action'])
 
-const taskStore = useTaskStore()
-
-function onPriorityActions(event) {
-	switch (event.action) {
-		case 'newValue':
-			updateField(taskStore, 'priority', event.value)
-			break
-	}
-}
-
-function onChecklistEditorActions(event) {
-	switch (event.action) {
-		case 'add':
-            const updatedChecklist = [...taskStore.editItem.checklist, event.value];
-            updateField(taskStore, 'checklist', updatedChecklist);
-		break
-
-		case 'remove':
-			taskStore.checklistRemoveItem({ index: event.index });
-		break
-
-		case 'toggle':
-            taskStore.checklistToggleDone({id: event.id});
-		break
-	}
-}
-
-function onTagsEditorActions(event){
-    switch(event.action){
-        case "add" : 
-            const updatedTags = [...taskStore.editItem.tags, event.value];
-            updateField(taskStore, "tags", updatedTags);
-        break;
-        
-        case "remove" : 
-            taskStore.tagsRemoveItem({index: event.index});
-        break;
-    }
-}
-
 function closeDetail() {
 	emit('taskDetail:action', { action: 'closeDetail' })
+}
+
+// --- handle events ---
+function emitFieldInput(field, value){
+    emit("taskDetail:action", {
+        action: "newValue",
+        field,
+        value,
+    });
+}
+
+function forwardFieldInputEvents(field, event){
+    emit("taskDetail:action", {
+        field,
+        ...event,
+    });
 }
 
 </script>
@@ -58,8 +42,8 @@ function closeDetail() {
 			<div class="title heading-secondary">
 				<label for="title">Title</label>
 				<InputText
-					:model-value="taskStore.editItem.title"
-					@update:model-value="updateField(taskStore, 'title', $event)"
+                    v-model="task.title"
+                    @update:modelValue="emitFieldInput('title', $event)"
                 />
 			</div>
 
@@ -77,41 +61,44 @@ function closeDetail() {
 				<div class="description">
 					<label for="description">Description</label>
 					<Textarea
-                        :value="taskStore.editItem.description"
-                        @update:model-value="updateField(taskStore, 'description', $event)"
+                        v-model="task.description"
+                        @update:modelValue="emitFieldInput('description', $event)"
                     />
 				</div>
 
 				<div class="date">
 					<label for="date">Due Date</label>
 					<DatePicker
-						v-model="taskStore.editItem.date"
+						v-model="task.date"
 						showTime
 						hourFormat="12"
 						showIcon
 						fluid
 						iconDisplay="input"
-						@update:modelValue="updateField(taskStore, 'date', $event)"
+						@update:modelValue="emitFieldInput('date', $event)"
 					/>
 				</div>
 
 				<div class="priority">
 					<PrioritySelector 
-                        @prioritySelector:action="onPriorityActions" 
+                        @prioritySelector:action="forwardFieldInputEvents('priority', $event)" 
+                        :selectedPriority="task.priority"
                     />
 				</div>
 
 				<div class="tags">
 					<TagsEditor 
-                        :tags="taskStore.editItem.tags"
-                        @tagsEditor:action="onTagsEditorActions"
+                        :tags="task.tags"
+                        :errors="errors"
+                        @tagsEditor:action="forwardFieldInputEvents('tags', $event)"
                     />
 				</div>
 
 				<div class="checklist">
 					<ChecklistEditor 
-					    :checklist="taskStore.editItem.checklist"
-					    @checklistEditor:action="onChecklistEditorActions"
+                        :checklist="task.checklist"
+                        :errors="errors"
+                        @checklistEditor:action="forwardFieldInputEvents('checklist', $event)"
                     />
 				</div>
 			</div>
@@ -129,7 +116,7 @@ function closeDetail() {
 	position: fixed;
 	inset: 0;
 	display: grid;
-	place-items: center;
+	place-items: start;
 	z-index: var(--z-modal);
 	overflow-y: scroll;
 }
@@ -212,6 +199,10 @@ function closeDetail() {
 }
 
 @include media.up(bp.$bp-sm) {
+    .task-detail-container {
+        place-items: center;
+    }
+
 	.task-detail {
 		width: 90%;
 	}

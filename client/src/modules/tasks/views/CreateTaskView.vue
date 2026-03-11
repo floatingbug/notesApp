@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue'
-import { CreateTaskForm } from '../components'
+import {CreateTaskForm} from "../components";
 import { selectPriorityOptions } from '../config'
 import { createTaskAPI } from '../api/task.api.js'
 import { useToast } from 'primevue/usetoast'
+import {useErrors} from "@/composables";
 
 const toast = useToast()
-const createTaskErrors = ref({})
+const errors = useErrors();
 
 async function onCreateTaskFormActions(event) {
 	if (event.action === 'submitForm') {
@@ -19,14 +20,9 @@ async function onCreateTaskFormActions(event) {
 				life: 3000,
 			})
 		} catch (error) {
-			createTaskErrors.value = error.response.data.errors.reduce((accumulator, error) => {
-				if (error.type === 'title') accumulator.title = error.message
-				return accumulator
-			}, {})
+            const apiErrors = error.response.data?.errors;
+            errors.setErrors(apiErrors);
 		}
-	}
-	if (event.action === 'newUserInteraction') {
-		createTaskErrors.value = {}
 	}
 }
 </script>
@@ -39,7 +35,7 @@ async function onCreateTaskFormActions(event) {
 
 		<div class="create-task__form-container">
 			<CreateTaskForm
-				:errors="createTaskErrors"
+				:errors="errors"
 				:options="selectPriorityOptions"
 				@createTaskForm:action="onCreateTaskFormActions"
 			/>

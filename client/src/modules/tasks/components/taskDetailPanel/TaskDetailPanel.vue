@@ -1,47 +1,36 @@
 <script setup>
-import useTaskStore from '@/stores/task/useTaskStore.js'
+import {ref, toRaw, watch} from "vue";
 import { ChecklistEditor, PrioritySelector, TagsEditor } from '../shared'
-import { updateField } from '@/stores/shared/entity'
 
-const taskStore = useTaskStore()
+const props = defineProps({
+    task: {
+        type: Object,
+        required: true,
+    },
+    errors: {
+        type: Object,
+        default: true,
+    },
+});
 
-function onPriorityActions(event) {
-	switch (event.action) {
-		case 'newValue':
-			updateField(taskStore, 'priority', event.value)
-			break
-	}
+const emit = defineEmits(["taskDetail:action"]);
+
+// --- handle events ---
+function emitFieldInput(field, value){
+    emit("taskDetail:action", {
+        action: "newValue",
+        field,
+        value,
+    });
 }
 
-function onChecklistEditorActions(event) {
-	switch (event.action) {
-		case 'add':
-            const updatedChecklist = [...taskStore.editItem.checklist, event.value];
-            updateField(taskStore, 'checklist', updatedChecklist);
-		break
-
-		case 'remove':
-			taskStore.checklistRemoveItem({ index: event.index });
-		break
-
-		case 'toggle':
-            taskStore.checklistToggleDone({id: event.id});
-		break
-	}
+function forwardFieldInputEvents(field, event){
+    emit("taskDetail:action", {
+        field,
+        ...event,
+    });
 }
 
-function onTagsEditorActions(event){
-    switch(event.action){
-        case "add" : 
-            const updatedTags = [...taskStore.editItem.tags, event.value];
-            updateField(taskStore, "tags", updatedTags);
-        break;
-        
-        case "remove" : 
-            taskStore.tagsRemoveItem({index: event.index});
-        break;
-    }
-}
 
 </script>
 
@@ -49,20 +38,20 @@ function onTagsEditorActions(event){
 	<div class="task-detail-content">
 		<div class="heading-secondary">Selected task</div>
 
-		<div class="task-detail card" v-if="taskStore.editItem">
+		<div class="task-detail card" v-if="true">
 			<div class="title input-group">
 				<label for="title">Title</label>
 				<InputText
-					:model-value="taskStore.editItem.title"
-					@update:model-value="updateField(taskStore, 'title', $event)"
+                    v-model="task.title"
+                    @update:modelValue="emitFieldInput('title', $event)"
 				/>
 			</div>
 
 			<div class="description input-group">
 				<label for="description">Description</label>
 				<Textarea
-					:value="taskStore.editItem.description"
-					@update:model-value="updateField(taskStore, 'description', $event)"
+                    v-model="task.description"
+                    @update:modelValue="emitFieldInput('description', $event)"
 				/>
 			</div>
 
@@ -70,33 +59,40 @@ function onTagsEditorActions(event){
 				<div class="date">
 					<label for="date">Due Date</label>
 					<DatePicker
-						v-model="taskStore.editItem.date"
+						v-model="task.date"
 						showTime
 						hourFormat="12"
 						showIcon
 						fluid
 						iconDisplay="input"
-						@update:modelValue="updateField(taskStore, 'date', $event)"
+						@update:modelValue="emitFieldInput('date', $event)"
 					/>
 				</div>
 			</div>
 
 			<div class="priority-container">
-				<PrioritySelector @prioritySelector:action="onPriorityActions" />
+				<PrioritySelector 
+                    @prioritySelector:action="forwardFieldInputEvents('priority', $event)" 
+                    :selectedPriority="task.priority"
+                    :errors="errors"
+                />
 			</div>
 
 			<div class="tags-container">
 				<TagsEditor 
-                    :tags="taskStore.editItem.tags"
-                    @tagsEditor:action="onTagsEditorActions"
+                    :tags="task.tags"
+                    :errors="errors"
+                    @tagsEditor:action="forwardFieldInputEvents('tags', $event)"
                 />
 			</div>
 
 			<div class="checklist-container">
 				<ChecklistEditor
-					@checklistEditor:action="onChecklistEditorActions"
-					:checklist="taskStore.editItem.checklist"
+					:checklist="task.checklist"
+                    :errors="errors"
+					@checklistEditor:action="forwardFieldInputEvents('checklist', $event)"
 				/>
+
 			</div>
 		</div>
 	</div>

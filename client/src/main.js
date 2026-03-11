@@ -4,6 +4,9 @@ import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
+import InputGroup from "primevue/inputgroup";
+import InputGroupAddon from "primevue/inputgroupaddon";
+import FloatLabel from "primevue/floatlabel";
 import ProgressSpinner from 'primevue/progressspinner'
 import Message from 'primevue/message'
 import Password from 'primevue/password'
@@ -28,6 +31,10 @@ import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
 import DataView from 'primevue/dataview'
+import Divider from 'primevue/divider';
+import Editor from 'primevue/editor';
+import ToggleSwitch from 'primevue/toggleswitch';
+
 
 import App from './App.vue'
 import router from './router'
@@ -54,6 +61,9 @@ app.use(PrimeVue, {
 app.component('Button', Button)
 app.component('InputText', InputText)
 app.component('Textarea', Textarea)
+app.component("InputGroup", InputGroup);
+app.component("InputGroupAddon", InputGroupAddon);
+app.component("FloatLabel", FloatLabel);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Message', Message)
 app.component('Password', Password)
@@ -74,6 +84,9 @@ app.component('AccordionPanel', AccordionPanel)
 app.component('AccordionHeader', AccordionHeader)
 app.component('AccordionContent', AccordionContent)
 app.component('DataView', DataView)
+app.component('Divider', Divider)
+app.component('Editor', Editor)
+app.component('ToggleSwitch', ToggleSwitch)
 
 app.directive('tooltip', Tooltip)
 
